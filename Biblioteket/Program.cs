@@ -1,4 +1,6 @@
-﻿namespace Biblioteket
+﻿using System.Linq.Expressions;
+
+namespace Biblioteket
 {
     internal class Program
     {
@@ -81,17 +83,28 @@
             string[] bookNames = { "Haunting Adeline, by H.D. Carlton", "Twisted Love, by Ana Huang", "Neon Gods, by Katee Robert", "Credence, by Penelope Douglas", "Priest, by Sierra Simone" };
             int[] bookCopies = { 1, 3, 1, 4, 1 };
 
-            Console.WriteLine("------------------------");
-            Console.WriteLine("Wellcome to the liberary");
-            Console.WriteLine("------------------------");
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("Välkommer till Biblioteket!");
+            Console.WriteLine("---------------------------");
             Console.WriteLine("");
-            Console.WriteLine("Who are you?");
+            Console.WriteLine("Användarnamn: ");
 
             while (exit == false)
             {
                 switch (Console.ReadLine())
                 {
                     case "UserOne":
+                        Console.WriteLine("Lösenord: ");
+                        int ID = 0;
+                        while (!int.TryParse(Console.ReadLine(), out ID) || ID != userIDs[0])
+                        {
+                            Console.WriteLine("Fel lösenord");
+                        }
+                        if (ID == userIDs[0])
+                        {
+                            Console.WriteLine("Välkommen!");
+                            Menu();
+                        }
                         break;
 
                     case "UserTwo":
@@ -107,7 +120,7 @@
                         break;
 
                     default:
-                        Console.WriteLine("Not an existing user");
+                        Console.WriteLine("Icke existerande användare");
                         break;
                 }
             }
@@ -115,14 +128,43 @@
 
 
 
+        //Menu
+        static void Menu(int user)
+        {
+            Console.WriteLine("1: Visa böcker");
+            Console.WriteLine("2: Låna bok");
+            Console.WriteLine("3: Retunera bok");
+            Console.WriteLine("4: Mina lån");
+            Console.WriteLine("5: Logga ut");
 
+            int userChoise;
+            while (!int.TryParse(Console.ReadLine(), out userChoise))
+            {
+                Console.WriteLine("Var snäll välj ett giltigt alternativ");
+            }
+             //Hmmmm 
+            switch (userChoise)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+
+        }
 
         //Show available books
         static void ShowAvailableBooks(string[] names, int[] copies)
         {
             for (int i = 0; i < names.Length; i++)
             {
-                Console.WriteLine("Book ID: " + i + ": " + names[i] + ", " + copies[i] + " copies in storage");
+                Console.WriteLine("Book ID: " + i + ": " + names[i] + ", " + copies[i] + " kopior på lager");
             }
         }
 
@@ -144,7 +186,7 @@
             }
             else
             {
-                Console.WriteLine("This book is out of stock.");
+                Console.WriteLine("Vi har inte denna boken på lager");
                 return 0;
             }
         }
@@ -158,13 +200,13 @@
             }
             else
             {
-                Console.WriteLine("You have not borrowed this book");
+                Console.WriteLine("Du har itne lånat denna boken");
                 return 0;
             }
         }
 
         //Change user array size
-        static string[] ChangeSice(int size, string[] names)
+        static string[] ChangeSize(int size, string[] names)
         {
             string[] ret = new string[names.Length + size];
             for (int i = 0; i < names.Length + size; i++)
